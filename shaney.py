@@ -59,10 +59,12 @@ def main():
 
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--data", type=str, default="data/")
+	parser.add_argument("--n", type=int, default="2")
 
 	args = parser.parse_args()
 
 	data_dir = args.data
+	n = args.n
 
 	if data_dir[-1] != "/":
 		data_dir = data_dir + "/"
