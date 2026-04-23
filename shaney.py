@@ -11,10 +11,10 @@ def build(contexts, words, n):
 	context = words[:n]
 	for word in words[n:]:
 		key = tuple(context)
-		wordfreq = contexts.get(key, {})
-		wordfreq[word] = wordfreq.get(word, 0) + 1
-		contexts[key] = wordfreq
-		# print(key, word, wordfreq[word])
+		word_freq = contexts.get(key, {})
+		word_freq[word] = word_freq.get(word, 0) + 1
+		contexts[key] = word_freq
+		# print(key, word, word_freq[word])
 		context = context[1:] + [word]
 		
 # Generate semi-random output.
@@ -25,28 +25,28 @@ def generate(f, starters, contexts):
 	f.write(" ".join(context))
 	while True:
 		key = tuple(context)
-		wordfreq = contexts.get(key, {})
-		if not wordfreq:
+		word_freq = contexts.get(key, {})
+		if not word_freq:
 				break
-		word = choose(wordfreq)
+		word = choose(word_freq)
 		f.write(" " + word)
 		context = context[1:] + [word]
 	f.write("\n")
 
 # Randomly choose one word from a {word->frequency}
 # dictionary, the choice being weighted by frequency.
-def choose(wordfreq):
+def choose(word_freq):
 	# Calculate the total instances.
 	total = 0
-	for w,count in wordfreq.items():
+	for w,count in word_freq.items():
 			total += count
 	# Choose a random instance.
 	chosen = random.randint(1,total)
 	# Walk through to find it.
-	sofar = 0
-	for word,count in wordfreq.items():
-		sofar += count
-		if chosen <= sofar:
+	so_far = 0
+	for word,count in word_freq.items():
+		so_far += count
+		if chosen <= so_far:
 			return word
 	assert(0)
 
@@ -79,4 +79,3 @@ def main():
 
 if __name__ == '__main__':
 	main()
-
