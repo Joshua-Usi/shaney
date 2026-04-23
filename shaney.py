@@ -1,4 +1,4 @@
-#!/usr/bin/python 
+# !/usr/bin/python 
 import os, sys, string, random
 
 # Markov chain word generator.
@@ -66,7 +66,7 @@ def main():
 
 	for filename in sorted(os.listdir(data_dir)):
 		print("Reading " + data_dir + filename)
-		words = open(data_dir + filename).read().split()
+		words = open(data_dir + filename, encoding='utf-8').read().split()
 		starters.append(words[:2])
 		build(contexts, words, 2)
 
