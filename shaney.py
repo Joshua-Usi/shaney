@@ -1,6 +1,8 @@
 # !/usr/bin/python 
 import os, sys, string, random
 
+import argparse
+
 # Markov chain word generator.
 
 # Map each context to {word->frequency}.
@@ -54,11 +56,18 @@ def choose(word_freq):
 # mimic the probabilities of the input text.
 def main():
 	# Initialise.
-	data_dir = "data/"
-	n = 2
-	for arg in sys.argv[1:]:
-		if arg.isnumeric(): n = int(arg)
-		else: data_dir = arg
+
+	parser = argparse.ArgumentParser()
+	parser.add_argument("--data", type=str, default="data/")
+	parser.add_argument("--n", type=int, default=2)
+
+	args = parser.parse_args()
+
+	data_dir = args.data
+	n = args.n
+
+	if data_dir[-1] != "/":
+		data_dir = data_dir + "/"
 
 	# Build the frequency table by reading the input text(s).
 	contexts = {}
